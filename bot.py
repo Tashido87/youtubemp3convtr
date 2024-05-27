@@ -34,7 +34,7 @@ def start(update: Update, context: CallbackContext) -> None:
 def handle_message(update: Update, context: CallbackContext) -> None:
     message_text = update.message.text
     if message_text.startswith('https://www.youtube.com/') or message_text.startswith('https://youtu.be/'):
-        update.message.reply_text("Downloading and converting the video. Please wait...")
+        update.message.reply_text("mp3 ပြောင်းပေးနေပါတယ်၊ ခနစောင့်ပါခင်ဗျာ...")
         try:
             # Download and convert video to mp3
             video = YouTube(message_text)
