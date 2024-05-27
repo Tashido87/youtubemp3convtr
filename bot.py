@@ -9,8 +9,11 @@ from pydub import AudioSegment
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Bot token from BotFather
-BOT_TOKEN = '7048298713:AAH38dAIJEbsZnFWMoxu86NLZvmKydgqJIM'
+# Get the bot token from environment variables
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+
+# Initialize the bot
+bot = Bot(token=BOT_TOKEN)
 
 # Welcome message
 WELCOME_MESSAGE = "Hello! ကျနော် Tashido ပါ။ mp3 ပြောင်းဖို့ /start ကို နှိပ်ပါခင်ဗျာ"
@@ -20,11 +23,13 @@ INVALID_LINK = "Link လေးမှားယွင်းနေပါတယ်�
 
 # Define start command handler
 def start(update: Update, context: CallbackContext) -> None:
+    logger.info("Received /start command")
     update.message.reply_text(START_MESSAGE)
 
 # Define message handler for YouTube links
 def handle_message(update: Update, context: CallbackContext) -> None:
     message_text = update.message.text
+    logger.info(f"Received message: {message_text}")
     if message_text.startswith('https://www.youtube.com/') or message_text.startswith('https://youtu.be/'):
         update.message.reply_text("Downloading and converting the video. Please wait...")
         try:
@@ -49,6 +54,7 @@ def handle_message(update: Update, context: CallbackContext) -> None:
 
 # Main function to start the bot
 def main() -> None:
+    logger.info("Starting bot")
     updater = Updater(BOT_TOKEN)
     dispatcher = updater.dispatcher
 
